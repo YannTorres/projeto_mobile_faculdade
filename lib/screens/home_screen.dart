@@ -9,21 +9,24 @@ class HomeScreen extends StatelessWidget {
 
   final List<Product> products = [
     Product(
-      name: 'Produto 1',
-      description: 'Descrição do Produto 1',
+      name: 'Almofada',
+      description: 'Estampada',
+      details: 'Transforme sua casa com essa almofada, perfeita para quem busca sofisticação e aconchego. Feita com tecido aveludado de alta qualidade e enchimento super macio, ela proporciona máximo conforto para seus momentos de descanso. Com design moderno e diversas opções de cores, combina perfeitamente com qualquer decoração.',
       price: 29.99,
       imageUrl: 'lib/assets/notebook.jpg',
     ),
     Product(
-      name: 'Produto 2',
-      description: 'Descrição do Produto 2',
-      price: 49.99,
+      name: 'Notebook',
+      description: 'Samsumg',
+      details: 'Escolha ideal para quem busca desempenho e praticidade. Equipado com um processador Intel Core i7 de última geração, 16GB de RAM e SSD de 512GB, ele garante velocidade e eficiência para multitarefas, estudos e até mesmo games leves.',
+      price: 999.99,
       imageUrl: 'lib/assets/notebook.jpg',
     ),
     Product(
-      name: 'Produto 3',
-      description: 'Descrição do Produto 3',
-      price: 19.99,
+      name: 'Celular',
+      description: 'Samsung',
+      details: 'Dispositivo projetado para quem busca desempenho e estilo. Com uma tela AMOLED de 6.7" e taxa de atualização de 120Hz, você terá uma experiência visual fluida e imersiva. Equipado com um processador octa-core de alto desempenho, 8GB de RAM e 256GB de armazenamento, ele permite rodar aplicativos pesados com facilidade.',
+      price: 1999.99,
       imageUrl: 'lib/assets/notebook.jpg',
     ),
     // Adicione mais produtos aqui...
