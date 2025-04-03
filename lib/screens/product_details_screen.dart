@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/product.dart';
+import 'product_3d_view_screen.dart'; // Importação da nova tela
 
 class ProductDetailsScreen extends StatelessWidget {
   final Product product;
@@ -27,7 +28,10 @@ class ProductDetailsScreen extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               product.name,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 8),
             Text(
@@ -41,26 +45,47 @@ class ProductDetailsScreen extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               'Preço: R\$ ${product.price.toStringAsFixed(2)}',
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 24),
-            InkWell(
-              onTap: () async {
-                final url = 'https://example.com'; 
-                if (await canLaunchUrl(Uri.parse(url))) {
-                  await launchUrl(Uri.parse(url));
-                } else {
-                  throw 'Não foi possível abrir o link: $url';
-                }
-              },
-              child: Text(
-                'Saiba mais',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.blue,
-                  decoration: TextDecoration.underline,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                InkWell(
+                  onTap: () async {
+                    final url = 'https://example.com';
+                    if (await canLaunchUrl(Uri.parse(url))) {
+                      await launchUrl(Uri.parse(url));
+                    } else {
+                      throw 'Não foi possível abrir o link: $url';
+                    }
+                  },
+                  child: Text(
+                    'Saiba mais',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.blue,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
                 ),
-              ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Product3DViewScreen(
+                          modelPath: 'lib/assets/3d_models/${product.name.toLowerCase()}.obj',
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Text('Visualizar em 3D'),
+                ),
+              ],
             )
           ],
         ),
