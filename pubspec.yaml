@@ -26,8 +26,11 @@ flutter:
   # Adicione a seção assets para incluir a imagem
   assets:
     - lib/assets/notebook.jpg
+    - lib/assets/almofada.jpg
+    - lib/assets/images.jpeg
     - lib/assets/3d_models/almofada.obj
-    - lib/assets/3d_models/notebook.objlib\assets\3d_models\almofada.mtl
+    - lib/assets/3d_models/notebook.obj
+    - lib\assets\3d_models\almofada.mtl
     - lib/assets/3d_models/celular.obj
     - lib\assets\3d_models\texturas\almofadas.png
     - lib\assets\3d_models\almofada.mtl

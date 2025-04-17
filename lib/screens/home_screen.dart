@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
       description: 'Estampada',
       details: 'Transforme sua casa com essa almofada, perfeita para quem busca sofisticação e aconchego. Feita com tecido aveludado de alta qualidade e enchimento super macio, ela proporciona máximo conforto para seus momentos de descanso. Com design moderno e diversas opções de cores, combina perfeitamente com qualquer decoração.',
       price: 29.99,
-      imageUrl: 'lib/assets/notebook.jpg',
+      imageUrl: 'lib/assets/almofada.jpg',
     ),
     Product(
       name: 'Notebook',
@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
       description: 'Samsung',
       details: 'Dispositivo projetado para quem busca desempenho e estilo. Com uma tela AMOLED de 6.7" e taxa de atualização de 120Hz, você terá uma experiência visual fluida e imersiva. Equipado com um processador octa-core de alto desempenho, 8GB de RAM e 256GB de armazenamento, ele permite rodar aplicativos pesados com facilidade.',
       price: 1999.99,
-      imageUrl: 'lib/assets/notebook.jpg',
+      imageUrl: 'lib/assets/images.jpeg',
     ),
     // Adicione mais produtos aqui...
   ];
