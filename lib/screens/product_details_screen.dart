@@ -78,7 +78,7 @@ class ProductDetailsScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => Product3DViewScreen(
-                          modelPath: 'lib/assets/3d_models/${product.name.toLowerCase()}.obj',
+                          modelPath: 'lib/assets/3d_models/S11.gltf',
                         ),
                       ),
                     );

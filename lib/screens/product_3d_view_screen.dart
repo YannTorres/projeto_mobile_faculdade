@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cube/flutter_cube.dart';
+import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart';
+import 'package:vector_math/vector_math_64.dart' as vector;
 
 class Product3DViewScreen extends StatefulWidget {
   final String modelPath;
@@ -7,91 +8,61 @@ class Product3DViewScreen extends StatefulWidget {
   const Product3DViewScreen({super.key, required this.modelPath});
 
   @override
-  _Product3DViewScreenState createState() => _Product3DViewScreenState();
+  State<Product3DViewScreen> createState() => _Product3DViewScreenState();
 }
 
 class _Product3DViewScreenState extends State<Product3DViewScreen> {
-  late Scene _scene;
-  double _scale = 2.0; // Escala inicial do modelo
-  final Vector3 _position = Vector3(0, 0, 3); // Posição inicial da câmera
-  Object? _model;
+  late ArCoreController arCoreController;
+  bool isArCoreInitialized = false;
 
-  void _onSceneCreated(Scene scene) {
-    _scene = scene;
-    _scene.camera.position.z = _position.z; // Define a posição inicial da câmera
-    _model = Object(
-      fileName: widget.modelPath,
-      scale: Vector3(_scale, _scale, _scale),
-    );
-    _scene.world.add(_model!);
+  @override
+  void dispose() {
+    arCoreController.dispose();
+    super.dispose();
   }
 
-  void _updateScale(double scaleDelta) {
-    setState(() {
-      _scale = (_scale + scaleDelta).clamp(0.5, 5.0); // Limita a escala
-      if (_model != null) {
-        _model!.scale.setValues(_scale, _scale, _scale);
-        _scene.update();
-      }
-    });
+  void _onArCoreViewCreated(ArCoreController controller) {
+    arCoreController = controller;
+    _addModel();
   }
 
-  void _updatePosition(Offset delta) {
-    setState(() {
-      _position.x -= delta.dx * 0.01; // Sensibilidade horizontal
-      _position.y += delta.dy * 0.01; // Sensibilidade vertical
-      _scene.camera.position.setValues(_position.x, _position.y, _position.z);
-      _scene.update();
-    });
-  }
+  Future<void> _addModel() async {
+    try {
+      final node = ArCoreReferenceNode(
+        name: "modelo_3d",
+        objectUrl: widget.modelPath,
+        position: vector.Vector3(0, 0, -1.5),
+        scale: vector.Vector3(0.5, 0.5, 0.5),
+      );
 
-  void _updateZoom(double zoomDelta) {
-    setState(() {
-      _position.z = (_position.z + zoomDelta).clamp(1.0, 10.0); // Limita o zoom
-      _scene.camera.position.z = _position.z;
-      _scene.update();
-    });
+      arCoreController.addArCoreNode(node);
+      setState(() {
+        isArCoreInitialized = true;
+      });
+    } catch (e) {
+      print('Erro ao carregar modelo: $e');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Visualização 3D')),
-      body: GestureDetector(
-        // Usamos apenas onScaleUpdate para lidar com arrastar e pinçar
-        onScaleUpdate: (details) {
-          // Detecta movimento de arrastar (focalPointDelta)
-          if (details.pointerCount == 1) {
-            _updatePosition(details.focalPointDelta);
-          }
-          // Detecta gesto de pinçar (scale)
-          if (details.pointerCount == 2 && details.scale != 1.0) {
-            _updateScale(details.scale > 1.0 ? 0.1 : -0.1);
-          }
-        },
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.8,
-          child: Cube(
-            onSceneCreated: _onSceneCreated,
-          ),
-        ),
+      appBar: AppBar(
+        title: const Text('Visualização 3D'),
       ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            heroTag: 'zoomIn',
-            onPressed: () => _updateZoom(-0.5), // Zoom in
-            child: const Icon(Icons.zoom_in),
-          ),
-          const SizedBox(height: 10),
-          FloatingActionButton(
-            heroTag: 'zoomOut',
-            onPressed: () => _updateZoom(0.5), // Zoom out
-            child: const Icon(Icons.zoom_out),
-          ),
-        ],
+      body: ArCoreView(
+        onArCoreViewCreated: _onArCoreViewCreated,
+        enableTapRecognizer: true,
+        enablePlaneRenderer: true,
       ),
+      floatingActionButton: isArCoreInitialized
+          ? FloatingActionButton(
+              onPressed: () {
+                arCoreController.resume();
+              },
+              child: const Icon(Icons.refresh),
+            )
+          : null,
     );
   }
 }
