@@ -246,8 +246,13 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## 👥 Equipe
 
-- **Yann Torres** - Desenvolvedor Principal
 - **Equipe de Desenvolvimento** - Colaboradores
+- **Yann Torres**
+- **Luiz Felipe Medeiros**
+- **Lucas Tucunduva**
+- **Raphael Loureiro**
+- **Thaynara Damazio**
+- **Thamirys Pinheiro**
 
 ## 📞 Suporte
 
